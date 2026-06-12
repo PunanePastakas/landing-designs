@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Punane Pastakas — maandumislehe variandid</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #6b6b6b;
+      --line: #e2e2e2;
+      --bg: #fafafa;
+      --card: #ffffff;
+      /* Thumbnail: iframe renders at SCALE-x card width, shrunk back down */
+      --thumb-scale: 0.25;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    header {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 24px 8px;
+    }
+    h1 { font-size: 1.4rem; font-weight: 600; margin: 0 0 4px; }
+    header p { color: var(--muted); margin: 0; font-size: 0.95rem; }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .thumb {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+    .thumb iframe {
+      width: calc(100% / var(--thumb-scale));
+      height: calc(100% / var(--thumb-scale));
+      transform: scale(var(--thumb-scale));
+      transform-origin: 0 0;
+      border: 0;
+      pointer-events: none;
+    }
+    .thumb a {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+    }
+    .badge {
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: 1px solid var(--ink);
+      border-radius: 4px;
+      padding: 2px 8px;
+      flex-shrink: 0;
+    }
+    .name {
+      color: var(--muted);
+      font-size: 0.9rem;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .open {
+      display: inline-block;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .open:hover { background: #000; }
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8px 24px 48px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Punane Pastakas — maandumislehe variandid</h1>
+    <p>Ava iga variant täisvaates ja anna teada, milline kõige rohkem meeldib.</p>
+  </header>
+  <main>
+    <article class="card">
+      <div class="thumb">
+        <iframe src="v1/" title="Eelvaade: v1 — Marked Paper" loading="lazy" tabindex="-1"></iframe>
+        <a href="v1/" aria-label="Ava v1 — Marked Paper"></a>
+      </div>
+      <div class="meta">
+        <span class="badge">v1</span>
+        <span class="name">Marked Paper</span>
+        <a class="open" href="v1/">Ava täisvaade →</a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="thumb">
+        <iframe src="v2/" title="Eelvaade: v2 — Cinematic" loading="lazy" tabindex="-1"></iframe>
+        <a href="v2/" aria-label="Ava v2 — Cinematic"></a>
+      </div>
+      <div class="meta">
+        <span class="badge">v2</span>
+        <span class="name">Cinematic</span>
+        <a class="open" href="v2/">Ava täisvaade →</a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="thumb">
+        <iframe src="v3/" title="Eelvaade: v3 — Tres Mares" loading="lazy" tabindex="-1"></iframe>
+        <a href="v3/" aria-label="Ava v3 — Tres Mares"></a>
+      </div>
+      <div class="meta">
+        <span class="badge">v3</span>
+        <span class="name">Tres Mares</span>
+        <a class="open" href="v3/">Ava täisvaade →</a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="thumb">
+        <iframe src="v4/" title="Eelvaade: v4 — Kontrolltöö" loading="lazy" tabindex="-1"></iframe>
+        <a href="v4/" aria-label="Ava v4 — Kontrolltöö"></a>
+      </div>
+      <div class="meta">
+        <span class="badge">v4</span>
+        <span class="name">Kontrolltöö</span>
+        <a class="open" href="v4/">Ava täisvaade →</a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="thumb">
+        <iframe src="v5/" title="Eelvaade: v5 — Codex" loading="lazy" tabindex="-1"></iframe>
+        <a href="v5/" aria-label="Ava v5 — Codex"></a>
+      </div>
+      <div class="meta">
+        <span class="badge">v5</span>
+        <span class="name">Codex</span>
+        <a class="open" href="v5/">Ava täisvaade →</a>
+      </div>
+    </article>
+  </main>
+  <footer>
+    Igal lehel on üleval variandivahetaja (v1–v5), millega saab otse järgmisele kavandile liikuda.
+  </footer>
+</body>
+</html>

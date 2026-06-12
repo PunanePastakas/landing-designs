@@ -1,0 +1,5 @@
+.DS_Store
+.claude/
+
+# Internal brand briefs and source material — not for the public repo
+uploads/
