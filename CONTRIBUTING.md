@@ -4,14 +4,14 @@ These are five candidate landing pages for RedPen / Punane Pastakas. This guide
 is for teammates who want to tweak and experiment with the designs.
 
 `main` is the canonical version that everyone reviews at
-<https://kriskur.github.io/landing-designs/>. It is **protected** — you cannot
+<https://punanepastakas.github.io/landing-designs/>. It is **protected** — you cannot
 push to it directly. All changes go through a branch and a pull request, which
 keeps that shared link stable while you experiment freely.
 
 ## One-time setup
 
 ```bash
-git clone https://github.com/kriskur/landing-designs.git
+git clone https://github.com/PunanePastakas/landing-designs.git
 cd landing-designs
 ```
 
@@ -64,7 +64,7 @@ cd landing-designs
 ## Merging
 
 When a PR looks good, merge it into `main`. The public site at
-<https://kriskur.github.io/landing-designs/> updates automatically within a
+<https://punanepastakas.github.io/landing-designs/> updates automatically within a
 minute or two. Delete your branch after merging to keep things tidy.
 
 ## Notes
