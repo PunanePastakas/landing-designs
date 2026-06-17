@@ -21,15 +21,15 @@
       } },
     };
   </script>
-  <link rel="stylesheet" href="shared/redpen-base.css" />
+  <link rel="stylesheet" href="shared/redpen-base.css?v=2" />
 
   <!-- Waitlist backend: Supabase JS + public config + submit handler.
        Loaded with `defer` so they execute in order after the DOM is parsed.
        The anon key in redpen-config.js is PUBLIC by design (safe with the
        INSERT-only RLS policy in supabase/waitlist.sql). -->
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script defer src="shared/redpen-config.js"></script>
-  <script defer src="shared/redpen-waitlist.js"></script>
+  <script defer src="shared/redpen-config.js?v=2"></script>
+  <script defer src="shared/redpen-waitlist.js?v=2"></script>
 
   <style>
     /* Clip stray horizontal overflow so phones never scroll sideways.
@@ -508,7 +508,7 @@
   </main>
 
 
-  <script src="shared/redpen-motion.js"></script>
+  <script src="shared/redpen-motion.js?v=2"></script>
   <script>
     /* Mobile menu toggle */
     (function () {
