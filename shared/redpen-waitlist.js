@@ -49,14 +49,32 @@
     var emailEl = document.getElementById('email');
     var honeypotEl = document.getElementById('company');
 
-    function setStatus(msg, kind) {
+    // Remember which message is showing (by key) so it can be re-rendered in
+    // the other language when the visitor flips the ET/EN toggle.
+    var currentStatus = null; // { key, kind } or null when nothing is shown
+
+    function renderStatus() {
       if (!statusEl) return;
-      statusEl.textContent = msg;
+      statusEl.textContent = currentStatus ? t(currentStatus.key) : '';
+      var kind = currentStatus && currentStatus.kind;
       // success → brand green, error → correction red, neutral → muted
       statusEl.style.color =
         kind === 'success' ? 'var(--rp-primary-strong)' :
         kind === 'error'   ? 'var(--rp-correction)' :
                              'var(--rp-muted)';
+    }
+
+    function setStatus(key, kind) {
+      currentStatus = key ? { key: key, kind: kind } : null;
+      renderStatus();
+    }
+
+    // When the language toggle rewrites <html lang>, re-render the current
+    // message so the confirmation always matches the language on screen.
+    if (window.MutationObserver) {
+      new MutationObserver(renderStatus).observe(document.documentElement, {
+        attributes: true, attributeFilter: ['lang'],
+      });
     }
 
     var cfg = window.REDPEN_CONFIG;
@@ -73,21 +91,21 @@
 
       // Bot trap: a filled honeypot means a script, not a teacher. Pretend success.
       if (honeypotEl && honeypotEl.value.trim() !== '') {
-        setStatus(t('success'), 'success');
+        setStatus('success', 'success');
         form.reset();
         return;
       }
 
       var email = (emailEl && emailEl.value || '').trim();
-      if (!email) { setStatus(t('error'), 'error'); return; }
+      if (!email) { setStatus('error', 'error'); return; }
 
       if (!client) {
-        setStatus(t('offline'), 'error');
+        setStatus('offline', 'error');
         return;
       }
 
       if (submitBtn) submitBtn.disabled = true;
-      setStatus(t('sending'), 'neutral');
+      setStatus('sending', 'neutral');
 
       // NOTE: no .select() — anon has no read policy, so chaining a read errors.
       client.from('waitlist').insert({
@@ -99,20 +117,20 @@
         if (submitBtn) submitBtn.disabled = false;
         if (res && res.error) {
           if (res.error.code === '23505') {     // unique_violation = already signed up
-            setStatus(t('duplicate'), 'success');
+            setStatus('duplicate', 'success');
             form.reset();
           } else {
             console.error('[redpen-waitlist] insert failed:', res.error);
-            setStatus(t('error'), 'error');
+            setStatus('error', 'error');
           }
         } else {
-          setStatus(t('success'), 'success');
+          setStatus('success', 'success');
           form.reset();
         }
       }, function (err) {
         if (submitBtn) submitBtn.disabled = false;
         console.error('[redpen-waitlist] network error:', err);
-        setStatus(t('error'), 'error');
+        setStatus('error', 'error');
       });
     });
   });
