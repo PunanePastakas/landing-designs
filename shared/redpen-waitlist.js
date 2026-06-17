@@ -24,6 +24,7 @@
     duplicate: { et: 'Oled juba nimekirjas — aitäh!',                      en: "You're already on the list — thanks!" },
     error:     { et: 'Midagi läks valesti. Proovi hetke pärast uuesti.',   en: 'Something went wrong. Please try again shortly.' },
     offline:   { et: 'Vorm pole veel ühendatud. Proovi varsti uuesti.',    en: "The form isn't connected yet. Please try again soon." },
+    tooFast:   { et: 'Üks hetk veel — vajuta uuesti :)',                   en: 'One moment — tap again :)' },
   };
 
   function t(key) {
@@ -49,6 +50,7 @@
     var emailEl = document.getElementById('email');
     var honeypotEl = document.getElementById('company');
     var checkEl = document.getElementById('success-check');
+    var loadedAt = Date.now(); // baseline for the bot timing-trap
 
     // Remember which message is showing (by key) so it can be re-rendered in
     // the other language when the visitor flips the ET/EN toggle.
@@ -101,10 +103,19 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // Bot trap: a filled honeypot means a script, not a teacher. Pretend success.
+      // Bot trap 1 — honeypot: a filled hidden field means a script, not a teacher.
       if (honeypotEl && honeypotEl.value.trim() !== '') {
-        setStatus('success', 'success');
+        setStatus('success', 'success'); // pretend success so the bot moves on
         form.reset();
+        return;
+      }
+
+      // Bot trap 2 — timing: the form sits well below the fold, so a real teacher
+      // cannot submit within a couple of seconds of load. A near-instant submit is
+      // a bot. We ask to "tap again" (not a silent drop) so a rare fast human still
+      // gets in on the retry, by which point enough time has passed.
+      if (Date.now() - loadedAt < 2500) {
+        setStatus('tooFast', 'error');
         return;
       }
 
