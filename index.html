@@ -29,7 +29,7 @@
        INSERT-only RLS policy in supabase/waitlist.sql). -->
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="shared/redpen-config.js?v=2"></script>
-  <script defer src="shared/redpen-waitlist.js?v=2"></script>
+  <script defer src="shared/redpen-waitlist.js?v=3"></script>
 
   <style>
     /* Clip stray horizontal overflow so phones never scroll sideways.
@@ -40,6 +40,10 @@
        mobile. The underline stroke itself still draws. */
     @media (max-width: 767px) { .pen-overlay { display: none !important; } }
     .variant-switcher { display: none !important; }
+    /* signup success — the pen draws a green tick next to the confirmation */
+    .success-check path { stroke-dasharray: 56; stroke-dashoffset: 56; }
+    .success-check.drawn path { transition: stroke-dashoffset 0.55s cubic-bezier(0.2, 0.8, 0.2, 1); stroke-dashoffset: 0; }
+    @media (prefers-reduced-motion: reduce) { .success-check path { stroke-dashoffset: 0; } }
     /* ── live grading demo (from variant G) ─────────────────────── */
     .demo [class*="ph-"] { opacity: 0; transform: translateY(6px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .demo[data-phase="1"] .ph-1,
@@ -82,7 +86,7 @@
       <nav class="hidden items-center gap-7 text-sm font-semibold text-[var(--rp-text-soft)] md:flex" aria-label="Peamenüü">
         <a class="transition hover:text-[var(--rp-correction)]" href="#probleem" data-en="The problem">Probleem</a>
         <a class="transition hover:text-[var(--rp-correction)]" href="#kuidas" data-en="How it works">Kuidas töötab</a>
-        <a class="transition hover:text-[var(--rp-correction)]" href="#saavutused" data-en="Achievements">Saavutused</a>
+        <a class="transition hover:text-[var(--rp-correction)]" href="#voimekus" data-en="Capability">Võimekus</a>
         <a class="transition hover:text-[var(--rp-correction)]" href="#meist" data-en="About us">Meist</a>
       </nav>
       <div class="hidden items-center gap-2.5 md:flex">
@@ -102,7 +106,7 @@
       <nav class="flex flex-col gap-1 text-base font-semibold text-[var(--rp-text-soft)]" aria-label="Mobiilimenüü">
         <a class="rounded-[var(--rp-radius-control)] px-2 py-2.5 transition hover:bg-[var(--rp-surface-subtle)] hover:text-[var(--rp-correction)]" href="#probleem" data-en="The problem">Probleem</a>
         <a class="rounded-[var(--rp-radius-control)] px-2 py-2.5 transition hover:bg-[var(--rp-surface-subtle)] hover:text-[var(--rp-correction)]" href="#kuidas" data-en="How it works">Kuidas töötab</a>
-        <a class="rounded-[var(--rp-radius-control)] px-2 py-2.5 transition hover:bg-[var(--rp-surface-subtle)] hover:text-[var(--rp-correction)]" href="#saavutused" data-en="Achievements">Saavutused</a>
+        <a class="rounded-[var(--rp-radius-control)] px-2 py-2.5 transition hover:bg-[var(--rp-surface-subtle)] hover:text-[var(--rp-correction)]" href="#voimekus" data-en="Capability">Võimekus</a>
         <a class="rounded-[var(--rp-radius-control)] px-2 py-2.5 transition hover:bg-[var(--rp-surface-subtle)] hover:text-[var(--rp-correction)]" href="#meist" data-en="About us">Meist</a>
       </nav>
       <div class="mt-3 flex items-center justify-between gap-3 border-t border-[var(--rp-border)] pt-4">
@@ -267,143 +271,9 @@
       </div>
     </section>
 
-    <!-- ── SAAVUTUSED ────────────────────────────────────── -->
-    <section id="saavutused" data-screen-label="Saavutused" class="border-y-2 border-[var(--rp-ink)] bg-[var(--rp-surface-warm)]">
-      <div class="mx-auto max-w-shell px-5 py-20 md:py-28">
-        <p class="reveal text-sm font-bold uppercase tracking-[0.18em] text-[var(--rp-correction)]" data-en="Achievements">Saavutused</p>
-        <h2 class="reveal mt-3 font-display text-4xl font-semibold text-[var(--rp-ink)] sm:text-5xl" data-delay="1" data-en="Recent achievements and recognition">Viimase aja saavutused ja tunnustused</h2>
-        <div class="mt-12 grid gap-8 md:grid-cols-3">
-          <!-- Presidendi haridushäkaton -->
-          <a class="reveal panel overflow-hidden block transition hover:opacity-90" data-delay="1" href="https://www.linkedin.com/posts/matsenas_we-won-the-presidents-education-hackathon-ugcPost-7459685451067592704-wgG4/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFED79cBoulFRDWXiBkHT_JSWDYcnUflGDQ" target="_blank" rel="noopener">
-            <div style="height:240px;overflow:hidden;">
-              <img src="assets/redpen/pdf_imgs-000.jpg" alt="Presidendi haridushäkatoni võitjad" class="w-full h-full object-cover object-center" />
-            </div>
-            <div class="p-6">
-              <p class="text-xs font-bold uppercase tracking-[0.15em] text-[var(--rp-correction)]" data-en="🏆 1st place">🏆 1. koht</p>
-              <h3 class="mt-2 font-display text-xl font-semibold text-[var(--rp-ink)]" data-en="President's Education Hackathon">Presidendi haridushäkaton</h3>
-            </div>
-          </a>
-          <!-- Latitude59 -->
-          <a class="reveal panel overflow-hidden block transition hover:opacity-90" data-delay="2" href="https://www.linkedin.com/posts/ekke-henk-38724531b_1st-latitude59-2-pitches-working-on-the-ugcPost-7465718092426469376-nXVz/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFED79cBoulFRDWXiBkHT_JSWDYcnUflGDQ" target="_blank" rel="noopener">
-            <div style="height:240px;overflow:hidden;">
-              <img src="assets/redpen/pdf_imgs-001.jpg" alt="Latitude59 pitch" class="w-full h-full object-cover" style="object-position:center 40%;" />
-            </div>
-            <div class="p-6">
-              <p class="text-xs font-bold uppercase tracking-[0.15em] text-[var(--rp-correction)]" data-en="✏️ 2 PITCHES">✏️ 2 PITCHI</p>
-              <h3 class="mt-2 font-display text-xl font-semibold text-[var(--rp-ink)]" data-en="Latitude59 conference">Latitude59 konverents</h3>
-            </div>
-          </a>
-          <!-- Tartu -->
-          <a class="reveal panel overflow-hidden block transition hover:opacity-90" data-delay="3" href="https://www.linkedin.com/posts/unitartucs_the-winners-of-the-student-project-contest-activity-7468216160669552640-JUPO?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFED79cBoulFRDWXiBkHT_JSWDYcnUflGDQ" target="_blank" rel="noopener">
-            <div style="height:240px;overflow:hidden;">
-              <img src="assets/redpen/pdf_imgs-002.jpg" alt="Tartu tudengivõistlus" class="w-full h-full object-cover object-center" />
-            </div>
-            <div class="p-6">
-              <p class="text-xs font-bold uppercase tracking-[0.15em] text-[var(--rp-correction)]" data-en="🏆 1st place">🏆 1. koht</p>
-              <h3 class="mt-2 font-display text-xl font-semibold text-[var(--rp-ink)]" data-en="Tartu student competition <span class='font-sans text-sm font-normal text-[var(--rp-muted)]'>(1st-year students category)</span>">Tartu tudengivõistlus <span class="font-sans text-sm font-normal text-[var(--rp-muted)]">(1. aasta tudengite kategoorias)</span></h3>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── VÕIMEKUS ───────────────────────────────────────── -->
-    <section id="voimekus" data-screen-label="Võimekus" class="mx-auto max-w-shell px-5 py-20 md:py-28">
-      <div class="reveal relative hidden md:grid md:grid-cols-2" style="min-height:420px;">
-        <!-- SVG arrows -->
-        <svg class="pointer-events-none absolute inset-0 w-full h-full" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 100">
-          <defs>
-            <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-              <path d="M0,0 L0,6 L6,3 z" fill="var(--rp-ink)" />
-            </marker>
-          </defs>
-          <!-- arrow from title area → top card -->
-          <line x1="42" y1="38" x2="54" y2="18" stroke="var(--rp-ink)" stroke-width="0.8" marker-end="url(#arr)" />
-          <!-- arrow from subtitle area → bottom card -->
-          <line x1="42" y1="58" x2="54" y2="76" stroke="var(--rp-ink)" stroke-width="0.8" marker-end="url(#arr)" />
-        </svg>
-
-        <!-- Left: text, vertically centered -->
-        <div class="flex flex-col justify-center text-center pr-8">
-          <h2 class="font-display text-5xl font-semibold text-[var(--rp-ink)] sm:text-6xl" data-en="MURG pilot project">MURG-i pilootprojekt</h2>
-          <p class="mt-6 text-xl font-bold text-[var(--rp-ink)]" data-en="120 exams<br/>(1000+ pages of maths)">120 eksamit<br/>(1000+ lehekülge matemaatikat)</p>
-        </div>
-
-        <!-- Right: top card high, bottom card low -->
-        <div class="flex flex-col justify-between py-4 pl-8">
-          <div class="panel p-8 self-end w-full text-center">
-            <dt class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--rp-muted)]" data-en="Error rate">Veamäär</dt>
-            <dd class="mt-3 font-display text-6xl font-semibold text-[var(--rp-correction)]">±1%</dd>
-          </div>
-          <div class="panel p-8 self-start w-full mt-16 text-center">
-            <dt class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--rp-muted)]" data-en="Speed">Kiirus</dt>
-            <dd class="mt-3 font-display text-6xl font-semibold text-[var(--rp-correction)]" data-en="2x faster">2x kiirem</dd>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mobile fallback (no arrows) -->
-      <div class="reveal md:hidden">
-        <h2 class="font-display text-5xl font-semibold text-[var(--rp-ink)]" data-en="MURG pilot project">MURG-i pilootprojekt</h2>
-        <p class="mt-5 text-xl font-bold text-center text-[var(--rp-ink)]" data-en="120 exams<br/>(1000+ pages of maths)">120 eksamit<br/>(1000+ lehekülge matemaatikat)</p>
-        <dl class="mt-8 grid gap-6">
-          <div class="panel p-8">
-            <dt class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--rp-muted)]" data-en="Error rate">Veamäär</dt>
-            <dd class="mt-3 font-display text-6xl font-semibold text-[var(--rp-correction)]">±1%</dd>
-          </div>
-          <div class="panel p-8">
-            <dt class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--rp-muted)]" data-en="Speed">Kiirus</dt>
-            <dd class="mt-3 font-display text-6xl font-semibold text-[var(--rp-correction)]" data-en="2x faster">2x kiirem</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
-
-    <!-- ── MEIST ─────────────────────────────────────────── -->
-    <section id="meist" data-screen-label="Meist" class="border-y-2 border-[var(--rp-ink)] bg-[var(--rp-surface-warm)]">
-      <div class="mx-auto max-w-shell px-5 py-20 md:py-28">
-        <p class="reveal text-sm font-bold uppercase tracking-[0.18em] text-[var(--rp-correction)]" data-en="About us">Meist</p>
-        <h2 class="reveal mt-3 font-display text-4xl font-semibold text-[var(--rp-ink)] sm:text-5xl" data-delay="1" data-en="Our team">Meie tiim</h2>
-        <p class="reveal mt-4 max-w-2xl text-lg text-[var(--rp-text-soft)]" data-delay="2" data-en="Our team brings both teacher and student experience. We also have seasoned developers, which means we feel this pain first-hand and know how to ease it.">Tiimis on nii õpetaja kui ka õpilase kogemust. Samuti on meil kogenud arendajad, mis tähendab, et me tunneme seda valu ja oskame seda ka leevendada.</p>
-        <div class="mt-12 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          <div class="reveal panel overflow-hidden text-center" data-delay="1">
-            <img src="assets/redpen/pdf_imgs-011.jpg" alt="Ekke Martin Henk" class="w-full object-cover object-center" style="height:220px;" />
-            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Ekke Martin Henk</p></div>
-          </div>
-          <div class="reveal panel overflow-hidden text-center" data-delay="2">
-            <img src="assets/redpen/pdf_imgs-004.jpg" alt="Andrius Matšenas" class="w-full object-cover object-top" style="height:220px;" />
-            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Andrius Matšenas</p></div>
-          </div>
-          <div class="reveal panel overflow-hidden text-center" data-delay="3">
-            <img src="assets/redpen/pdf_imgs-003.jpg" alt="Hendrik Pärli" class="w-full object-cover object-top" style="height:220px;" />
-            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Hendrik Pärli</p></div>
-          </div>
-          <div class="reveal panel overflow-hidden text-center" data-delay="4">
-            <img src="assets/redpen/pdf_imgs-007.jpg" alt="Elias Teikari" class="w-full object-cover object-top" style="height:220px;" />
-            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Elias Teikari</p></div>
-          </div>
-          <div class="reveal panel overflow-hidden text-center" data-delay="1">
-            <img src="assets/redpen/pdf_imgs-009.jpg" alt="Kristofer Torokoff" class="w-full object-cover object-top" style="height:220px;" />
-            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Kristofer Torokoff</p></div>
-          </div>
-          <div class="reveal panel overflow-hidden text-center" data-delay="2">
-            <img src="assets/redpen/pdf_imgs-010.jpg" alt="Ralf Maapalu" class="w-full object-cover object-top" style="height:220px;" />
-            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Ralf Maapalu</p></div>
-          </div>
-          <div class="reveal panel overflow-hidden text-center" data-delay="3">
-            <img src="assets/redpen/pdf_imgs-005.jpg" alt="Karl-Elmar Vikat" class="w-full object-cover object-top" style="height:220px;" />
-            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Karl-Elmar Vikat</p></div>
-          </div>
-          <div class="reveal panel overflow-hidden text-center" data-delay="4">
-            <img src="assets/redpen/pdf_imgs-012.jpg" alt="Oliver Iida" class="w-full object-cover object-top" style="height:220px;" />
-            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Oliver Iida</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ── ANDMEKAITSE ────────────────────────────────────── -->
-    <section id="andmekaitse" data-screen-label="Andmekaitse" class="mx-auto max-w-shell px-5 py-20 md:py-28">
+    <section id="andmekaitse" data-screen-label="Andmekaitse" class="border-y-2 border-[var(--rp-ink)] bg-[var(--rp-surface-warm)]">
+      <div class="mx-auto max-w-shell px-5 py-20 md:py-28">
       <div class="reveal text-center">
         <p class="text-sm font-bold uppercase tracking-[0.18em] text-[var(--rp-correction)]" data-en="Data protection">Andmekaitse</p>
         <h2 class="mt-3 font-display text-4xl font-semibold text-[var(--rp-ink)] sm:text-5xl" data-en="Protecting personal data matters deeply to us">Isikuandmete kaitsmine on meile väga tähtis</h2>
@@ -464,6 +334,142 @@
           <p class="mt-2 text-[var(--rp-text-soft)]" data-en="Students' work never moves on to big companies' testing centres.">Õpilaste tööd ei liigu edasi suurfirmade testimiskeskustesse.</p>
         </div>
       </div>
+      </div>
+    </section>
+
+    <!-- ── VÕIMEKUS ───────────────────────────────────────── -->
+    <section id="voimekus" data-screen-label="Võimekus" class="mx-auto max-w-shell px-5 py-20 md:py-28">
+      <div class="reveal relative hidden md:grid md:grid-cols-2" style="min-height:420px;">
+        <!-- SVG arrows -->
+        <svg class="pointer-events-none absolute inset-0 w-full h-full" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 100">
+          <defs>
+            <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3 z" fill="var(--rp-ink)" />
+            </marker>
+          </defs>
+          <!-- arrow from title area → top card -->
+          <line x1="42" y1="38" x2="54" y2="18" stroke="var(--rp-ink)" stroke-width="0.8" marker-end="url(#arr)" />
+          <!-- arrow from subtitle area → bottom card -->
+          <line x1="42" y1="58" x2="54" y2="76" stroke="var(--rp-ink)" stroke-width="0.8" marker-end="url(#arr)" />
+        </svg>
+
+        <!-- Left: text, vertically centered -->
+        <div class="flex flex-col justify-center text-center pr-8">
+          <h2 class="font-display text-5xl font-semibold text-[var(--rp-ink)] sm:text-6xl" data-en="MURG pilot project">MURG-i pilootprojekt</h2>
+          <p class="mt-6 text-xl font-bold text-[var(--rp-ink)]" data-en="120 exams<br/>(1000+ pages of maths)">120 eksamit<br/>(1000+ lehekülge matemaatikat)</p>
+        </div>
+
+        <!-- Right: top card high, bottom card low -->
+        <div class="flex flex-col justify-between py-4 pl-8">
+          <div class="panel p-8 self-end w-full text-center">
+            <dt class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--rp-muted)]" data-en="Error rate">Veamäär</dt>
+            <dd class="mt-3 font-display text-6xl font-semibold text-[var(--rp-correction)]">±1%</dd>
+          </div>
+          <div class="panel p-8 self-start w-full mt-16 text-center">
+            <dt class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--rp-muted)]" data-en="Speed">Kiirus</dt>
+            <dd class="mt-3 font-display text-6xl font-semibold text-[var(--rp-correction)]"><span class="relative inline-block"><span data-en="2x faster">2x kiirem</span><svg class="pointer-events-none absolute left-1/2 top-1/2 h-[150%] w-[128%] -translate-x-1/2 -translate-y-1/2 overflow-visible" viewBox="0 0 240 110" fill="none" aria-hidden="true" preserveAspectRatio="none"><path class="pen-stroke" data-dur="760" stroke-width="4.5" d="M226 30 C 168 8, 44 8, 24 50 c -13 30 50 60 124 55 70 -5 100 -32 86 -60 -7 -18 -34 -28 -64 -30"></path></svg></span></dd>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile fallback (no arrows) -->
+      <div class="reveal md:hidden">
+        <h2 class="font-display text-5xl font-semibold text-[var(--rp-ink)]" data-en="MURG pilot project">MURG-i pilootprojekt</h2>
+        <p class="mt-5 text-xl font-bold text-center text-[var(--rp-ink)]" data-en="120 exams<br/>(1000+ pages of maths)">120 eksamit<br/>(1000+ lehekülge matemaatikat)</p>
+        <dl class="mt-8 grid gap-6">
+          <div class="panel p-8">
+            <dt class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--rp-muted)]" data-en="Error rate">Veamäär</dt>
+            <dd class="mt-3 font-display text-6xl font-semibold text-[var(--rp-correction)]">±1%</dd>
+          </div>
+          <div class="panel p-8">
+            <dt class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--rp-muted)]" data-en="Speed">Kiirus</dt>
+            <dd class="mt-3 font-display text-6xl font-semibold text-[var(--rp-correction)]"><span class="relative inline-block"><span data-en="2x faster">2x kiirem</span><svg class="pointer-events-none absolute left-1/2 top-1/2 h-[150%] w-[128%] -translate-x-1/2 -translate-y-1/2 overflow-visible" viewBox="0 0 240 110" fill="none" aria-hidden="true" preserveAspectRatio="none"><path class="pen-stroke" data-dur="760" stroke-width="4.5" d="M226 30 C 168 8, 44 8, 24 50 c -13 30 50 60 124 55 70 -5 100 -32 86 -60 -7 -18 -34 -28 -64 -30"></path></svg></span></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ── MEIST ─────────────────────────────────────────── -->
+    <section id="meist" data-screen-label="Meist" class="border-y-2 border-[var(--rp-ink)] bg-[var(--rp-surface-warm)]">
+      <div class="mx-auto max-w-shell px-5 py-20 md:py-28">
+        <p class="reveal text-sm font-bold uppercase tracking-[0.18em] text-[var(--rp-correction)]" data-en="About us">Meist</p>
+        <h2 class="reveal mt-3 font-display text-4xl font-semibold text-[var(--rp-ink)] sm:text-5xl" data-delay="1" data-en="Our team">Meie tiim</h2>
+        <p class="reveal mt-4 max-w-2xl text-lg text-[var(--rp-text-soft)]" data-delay="2" data-en="Our team brings both teacher and student experience. We also have seasoned developers, which means we feel this pain first-hand and know how to ease it.">Tiimis on nii õpetaja kui ka õpilase kogemust. Samuti on meil kogenud arendajad, mis tähendab, et me tunneme seda valu ja oskame seda ka leevendada.</p>
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div class="reveal panel overflow-hidden text-center" data-delay="1">
+            <img src="assets/redpen/pdf_imgs-011.jpg" alt="Ekke Martin Henk" class="w-full object-cover object-center" style="height:220px;" />
+            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Ekke Martin Henk</p></div>
+          </div>
+          <div class="reveal panel overflow-hidden text-center" data-delay="2">
+            <img src="assets/redpen/pdf_imgs-004.jpg" alt="Andrius Matšenas" class="w-full object-cover object-top" style="height:220px;" />
+            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Andrius Matšenas</p></div>
+          </div>
+          <div class="reveal panel overflow-hidden text-center" data-delay="3">
+            <img src="assets/redpen/pdf_imgs-003.jpg" alt="Hendrik Pärli" class="w-full object-cover object-top" style="height:220px;" />
+            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Hendrik Pärli</p></div>
+          </div>
+          <div class="reveal panel overflow-hidden text-center" data-delay="4">
+            <img src="assets/redpen/pdf_imgs-007.jpg" alt="Elias Teikari" class="w-full object-cover object-top" style="height:220px;" />
+            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Elias Teikari</p></div>
+          </div>
+          <div class="reveal panel overflow-hidden text-center" data-delay="1">
+            <img src="assets/redpen/pdf_imgs-009.jpg" alt="Kristofer Torokoff" class="w-full object-cover object-top" style="height:220px;" />
+            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Kristofer Torokoff</p></div>
+          </div>
+          <div class="reveal panel overflow-hidden text-center" data-delay="2">
+            <img src="assets/redpen/pdf_imgs-010.jpg" alt="Ralf Maapalu" class="w-full object-cover object-top" style="height:220px;" />
+            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Ralf Maapalu</p></div>
+          </div>
+          <div class="reveal panel overflow-hidden text-center" data-delay="3">
+            <img src="assets/redpen/pdf_imgs-005.jpg" alt="Karl-Elmar Vikat" class="w-full object-cover object-top" style="height:220px;" />
+            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Karl-Elmar Vikat</p></div>
+          </div>
+          <div class="reveal panel overflow-hidden text-center" data-delay="4">
+            <img src="assets/redpen/pdf_imgs-012.jpg" alt="Oliver Iida" class="w-full object-cover object-top" style="height:220px;" />
+            <div class="p-4"><p class="font-display text-lg font-semibold text-[var(--rp-ink)]">Oliver Iida</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SAAVUTUSED ────────────────────────────────────── -->
+    <section id="saavutused" data-screen-label="Saavutused">
+      <div class="mx-auto max-w-shell px-5 py-20 md:py-28">
+        <p class="reveal text-sm font-bold uppercase tracking-[0.18em] text-[var(--rp-correction)]" data-en="Achievements">Saavutused</p>
+        <h2 class="reveal mt-3 font-display text-4xl font-semibold text-[var(--rp-ink)] sm:text-5xl" data-delay="1" data-en="Recent achievements and recognition">Viimase aja saavutused ja tunnustused</h2>
+        <div class="mt-12 grid gap-8 md:grid-cols-3">
+          <!-- Presidendi haridushäkaton -->
+          <a class="reveal panel overflow-hidden block transition hover:opacity-90" data-delay="1" href="https://www.linkedin.com/posts/matsenas_we-won-the-presidents-education-hackathon-ugcPost-7459685451067592704-wgG4/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFED79cBoulFRDWXiBkHT_JSWDYcnUflGDQ" target="_blank" rel="noopener">
+            <div style="height:240px;overflow:hidden;">
+              <img src="assets/redpen/pdf_imgs-000.jpg" alt="Presidendi haridushäkatoni võitjad" class="w-full h-full object-cover object-center" />
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold uppercase tracking-[0.15em] text-[var(--rp-correction)]" data-en="🏆 1st place">🏆 1. koht</p>
+              <h3 class="mt-2 font-display text-xl font-semibold text-[var(--rp-ink)]" data-en="President's Education Hackathon">Presidendi haridushäkaton</h3>
+            </div>
+          </a>
+          <!-- Latitude59 -->
+          <a class="reveal panel overflow-hidden block transition hover:opacity-90" data-delay="2" href="https://www.linkedin.com/posts/ekke-henk-38724531b_1st-latitude59-2-pitches-working-on-the-ugcPost-7465718092426469376-nXVz/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFED79cBoulFRDWXiBkHT_JSWDYcnUflGDQ" target="_blank" rel="noopener">
+            <div style="height:240px;overflow:hidden;">
+              <img src="assets/redpen/pdf_imgs-001.jpg" alt="Latitude59 pitch" class="w-full h-full object-cover" style="object-position:center 40%;" />
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold uppercase tracking-[0.15em] text-[var(--rp-correction)]" data-en="✏️ 2 PITCHES">✏️ 2 PITCHI</p>
+              <h3 class="mt-2 font-display text-xl font-semibold text-[var(--rp-ink)]" data-en="Latitude59 conference">Latitude59 konverents</h3>
+            </div>
+          </a>
+          <!-- Tartu -->
+          <a class="reveal panel overflow-hidden block transition hover:opacity-90" data-delay="3" href="https://www.linkedin.com/posts/unitartucs_the-winners-of-the-student-project-contest-activity-7468216160669552640-JUPO?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFED79cBoulFRDWXiBkHT_JSWDYcnUflGDQ" target="_blank" rel="noopener">
+            <div style="height:240px;overflow:hidden;">
+              <img src="assets/redpen/pdf_imgs-002.jpg" alt="Tartu tudengivõistlus" class="w-full h-full object-cover object-center" />
+            </div>
+            <div class="p-6">
+              <p class="text-xs font-bold uppercase tracking-[0.15em] text-[var(--rp-correction)]" data-en="🏆 1st place">🏆 1. koht</p>
+              <h3 class="mt-2 font-display text-xl font-semibold text-[var(--rp-ink)]" data-en="Tartu student competition <span class='font-sans text-sm font-normal text-[var(--rp-muted)]'>(1st-year students category)</span>">Tartu tudengivõistlus <span class="font-sans text-sm font-normal text-[var(--rp-muted)]">(1. aasta tudengite kategoorias)</span></h3>
+            </div>
+          </a>
+        </div>
+      </div>
     </section>
 
     <!-- ── JOIN ──────────────────────────────────────────── -->
@@ -486,6 +492,7 @@
                 <label for="company">Ära seda välja täida</label>
                 <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
               </div>
+              <svg id="success-check" class="success-check mx-auto mt-1 hidden h-9 w-9" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M9 25 l9 9 l20 -22" stroke="var(--rp-primary-strong)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
               <p id="waitlist-status" role="status" aria-live="polite" class="min-h-[1.75rem] text-xl font-bold"></p>
             </form>
             <p id="waitlist-note" class="mt-4 text-xs font-semibold text-[var(--rp-muted)]" data-en="We use your email only to get in touch about the pilot. We never share your address and you can remove yourself from the list at any time.">Kasutame su e-posti ainult selleks, et piloodi asjus sinuga ühendust võtta. Me ei jaga su aadressi ja saad end igal ajal nimekirjast eemaldada.</p>

@@ -48,6 +48,7 @@
     var submitBtn = document.getElementById('waitlist-submit');
     var emailEl = document.getElementById('email');
     var honeypotEl = document.getElementById('company');
+    var checkEl = document.getElementById('success-check');
 
     // Remember which message is showing (by key) so it can be re-rendered in
     // the other language when the visitor flips the ET/EN toggle.
@@ -62,11 +63,22 @@
         kind === 'success' ? 'var(--rp-primary-strong)' :
         kind === 'error'   ? 'var(--rp-correction)' :
                              'var(--rp-muted)';
+      // show the green tick only on a success state (kept across lang toggles)
+      if (checkEl) checkEl.classList.toggle('hidden', kind !== 'success');
+    }
+
+    // Replay the pen-drawn tick — only on a fresh success, not on re-render.
+    function drawCheck() {
+      if (!checkEl) return;
+      checkEl.classList.remove('hidden', 'drawn');
+      void checkEl.getBoundingClientRect(); // force reflow so the draw restarts
+      checkEl.classList.add('drawn');
     }
 
     function setStatus(key, kind) {
       currentStatus = key ? { key: key, kind: kind } : null;
       renderStatus();
+      if (kind === 'success') drawCheck();
     }
 
     // When the language toggle rewrites <html lang>, re-render the current
