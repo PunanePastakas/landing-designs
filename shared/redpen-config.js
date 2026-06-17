@@ -7,6 +7,6 @@
    To go live: replace the two placeholders below with the values from your
    Supabase project → Settings → API (Project URL + anon/public key). */
 window.REDPEN_CONFIG = {
-  SUPABASE_URL: '__SUPABASE_URL__',        // e.g. https://abcdefgh.supabase.co
-  SUPABASE_ANON_KEY: '__SUPABASE_ANON_KEY__', // the long "anon public" JWT
+  SUPABASE_URL: 'https://ykclvwqqdzcwcxfitutz.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrY2x2d3FxZHpjd2N4Zml0dXR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2ODI2MjYsImV4cCI6MjA5NzI1ODYyNn0.T9Dp_WoD5iSX-Xw4AEbzUmY52MHRZwxNxajkSVpFcNY',
 };
