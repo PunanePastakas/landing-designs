@@ -32,6 +32,13 @@
   <script defer src="shared/redpen-waitlist.js"></script>
 
   <style>
+    /* Clip stray horizontal overflow so phones never scroll sideways.
+       `clip` (not `hidden`) keeps the sticky header working. */
+    body { overflow-x: clip; }
+    /* The pen sprite is positioned against the viewport and overshoots the
+       right edge on narrow screens (and is purely decorative), so drop it on
+       mobile. The underline stroke itself still draws. */
+    @media (max-width: 767px) { .pen-overlay { display: none !important; } }
     .variant-switcher { display: none !important; }
     /* ── live grading demo (from variant G) ─────────────────────── */
     .demo [class*="ph-"] { opacity: 0; transform: translateY(6px); transition: opacity 0.5s ease, transform 0.5s ease; }
@@ -63,7 +70,7 @@
 <body data-variant="v1" class="font-sans text-[var(--rp-text)]">
 
   <!-- ── NAV ─────────────────────────────────────────────── -->
-  <header class="sticky top-0 z-50 border-b-2 border-[var(--rp-ink)] bg-[var(--rp-paper-warm)]/95 backdrop-blur">
+  <header class="sticky top-0 z-[100] border-b-2 border-[var(--rp-ink)] bg-[var(--rp-paper-warm)]/95 backdrop-blur">
     <div class="mx-auto flex max-w-shell items-center justify-between gap-4 px-5 py-3">
       <a href="#top" class="flex min-w-0 items-center gap-3" aria-label="Punane Pastakas — avaleht">
         <span class="logo-mark" aria-hidden="true"></span>
@@ -78,7 +85,27 @@
         <a class="transition hover:text-[var(--rp-correction)]" href="#saavutused" data-en="Achievements">Saavutused</a>
         <a class="transition hover:text-[var(--rp-correction)]" href="#meist" data-en="About us">Meist</a>
       </nav>
-      <div class="flex items-center gap-2.5">
+      <div class="hidden items-center gap-2.5 md:flex">
+        <div class="lang-toggle" role="group" aria-label="Keel">
+          <button type="button" data-lang="et" aria-pressed="true">ET</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <a href="#liitu" class="btn btn-primary btn-md" data-en="Join the waitlist">Liitu ootenimekirjaga</a>
+      </div>
+      <!-- mobile hamburger -->
+      <button id="menu-toggle" type="button" class="inline-flex items-center justify-center rounded-[var(--rp-radius-control)] border border-[var(--rp-border-strong)] p-2 text-[var(--rp-ink)] md:hidden" aria-label="Menüü" aria-controls="mobile-menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+    </div>
+    <!-- mobile dropdown menu -->
+    <div id="mobile-menu" class="hidden border-t border-[var(--rp-border-strong)] bg-[var(--rp-paper-warm)] px-5 py-4 md:hidden">
+      <nav class="flex flex-col gap-1 text-base font-semibold text-[var(--rp-text-soft)]" aria-label="Mobiilimenüü">
+        <a class="rounded-[var(--rp-radius-control)] px-2 py-2.5 transition hover:bg-[var(--rp-surface-subtle)] hover:text-[var(--rp-correction)]" href="#probleem" data-en="The problem">Probleem</a>
+        <a class="rounded-[var(--rp-radius-control)] px-2 py-2.5 transition hover:bg-[var(--rp-surface-subtle)] hover:text-[var(--rp-correction)]" href="#kuidas" data-en="How it works">Kuidas töötab</a>
+        <a class="rounded-[var(--rp-radius-control)] px-2 py-2.5 transition hover:bg-[var(--rp-surface-subtle)] hover:text-[var(--rp-correction)]" href="#saavutused" data-en="Achievements">Saavutused</a>
+        <a class="rounded-[var(--rp-radius-control)] px-2 py-2.5 transition hover:bg-[var(--rp-surface-subtle)] hover:text-[var(--rp-correction)]" href="#meist" data-en="About us">Meist</a>
+      </nav>
+      <div class="mt-3 flex items-center justify-between gap-3 border-t border-[var(--rp-border)] pt-4">
         <div class="lang-toggle" role="group" aria-label="Keel">
           <button type="button" data-lang="et" aria-pressed="true">ET</button>
           <button type="button" data-lang="en" aria-pressed="false">EN</button>
@@ -92,9 +119,9 @@
 
     <!-- ── HERO ──────────────────────────────────────────── -->
     <section data-screen-label="Hero" class="relative overflow-hidden">
-      <div class="mx-auto grid max-w-shell items-center gap-14 px-5 py-16 md:py-24 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <p class="reveal in text-center">
+      <div class="mx-auto grid grid-cols-1 max-w-shell items-center gap-14 px-5 py-16 md:py-24 lg:grid-cols-[1.05fr_0.95fr]">
+        <div class="min-w-0">
+          <p class="reveal in">
             <span class="text-xs font-bold uppercase tracking-[0.16em] text-[var(--rp-muted)]" data-en="For Estonian math teachers">Eesti matemaatikaõpetajatele</span>
           </p>
 
@@ -121,7 +148,7 @@
         </div>
 
         <!-- live grading demo (the graded paper, from variant G) -->
-        <div class="relative">
+        <div class="relative min-w-0">
           <div class="demo panel relative p-6 sm:p-7" data-phase="1" id="demo">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-dashed border-[var(--rp-border-strong)] pb-3">
               <p class="font-display text-lg font-semibold text-[var(--rp-ink)]" data-en="Paper 12 / 24 · Problem 5">Töö 12 / 24 · Ülesanne 5</p>
@@ -442,11 +469,11 @@
     <!-- ── JOIN ──────────────────────────────────────────── -->
     <section id="liitu" data-screen-label="Liitu" class="border-t-2 border-[var(--rp-ink)] bg-[var(--rp-primary-wash)]">
       <div class="mx-auto max-w-shell px-5 py-20 md:py-24">
-        <div class="reveal grid gap-6 md:grid-cols-2 items-stretch">
+        <div class="reveal grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
 
           <!-- Signup card -->
           <div class="panel p-8 text-center sm:p-12">
-            <h2 class="font-display text-4xl font-semibold leading-tight text-[var(--rp-ink)] sm:text-5xl" data-en="Join the waitlist<br>we're looking for pilot teachers<br>across Estonia!">Liitu ootenimekirjaga<br>otsime pilootõpetajaid<br>üle Eesti!</h2>
+            <h2 class="font-display text-3xl font-semibold leading-tight text-[var(--rp-ink)] sm:text-5xl" data-en="Join the waitlist<br>we're looking for pilot teachers<br>across Estonia!">Liitu ootenimekirjaga<br>otsime pilootõpetajaid<br>üle Eesti!</h2>
             <form id="waitlist-form" class="mx-auto mt-8 flex max-w-md flex-col gap-3">
               <div class="flex flex-col gap-3 sm:flex-row">
                 <label class="sr-only" for="email">E-post</label>
@@ -482,6 +509,26 @@
 
 
   <script src="shared/redpen-motion.js"></script>
+  <script>
+    /* Mobile menu toggle */
+    (function () {
+      'use strict';
+      var btn = document.getElementById('menu-toggle');
+      var menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+      function setOpen(open) {
+        menu.classList.toggle('hidden', !open);
+        btn.setAttribute('aria-expanded', String(open));
+      }
+      btn.addEventListener('click', function () { setOpen(menu.classList.contains('hidden')); });
+      // Tapping a section link closes the menu (the lang ET/EN buttons keep it open).
+      menu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setOpen(false); });
+      });
+      // Collapse if the viewport grows to desktop.
+      window.addEventListener('resize', function () { if (window.innerWidth >= 768) setOpen(false); });
+    })();
+  </script>
   <script>
     (function () {
       'use strict';
