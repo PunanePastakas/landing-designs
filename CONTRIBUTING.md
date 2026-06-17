@@ -1,75 +1,48 @@
-# Contributing — experimenting with the landing designs
+# Contributing
 
-These are five candidate landing pages for RedPen / Punane Pastakas. This guide
-is for teammates who want to tweak and experiment with the designs.
+The landing page for RedPen / Punane Pastakas. One static page at `index.html`,
+no build step. `main` is protected — work on a branch and open a pull request.
 
-`main` is the canonical version that everyone reviews at
-<https://punanepastakas.github.io/landing-designs/>. It is **protected** — you cannot
-push to it directly. All changes go through a branch and a pull request, which
-keeps that shared link stable while you experiment freely.
-
-## One-time setup
+## Setup & preview
 
 ```bash
 git clone https://github.com/PunanePastakas/landing-designs.git
 cd landing-designs
+python3 -m http.server 4173      # then open http://localhost:4173/
 ```
 
-## The workflow
+Fonts and Tailwind load from a CDN, so you need an internet connection.
 
-1. **Make a branch** — name it after yourself and what you're trying:
+## What lives where
 
-   ```bash
-   git checkout main && git pull
-   git checkout -b experiment/<your-name>-<short-idea>   # e.g. experiment/mari-bigger-hero
-   ```
+| Path | What it is |
+| ---- | ---------- |
+| `index.html` | the page |
+| `shared/redpen-base.css` | design tokens / base styles |
+| `shared/redpen-motion.js` | animations + ET/EN language toggle |
+| `shared/redpen-config.js` | **public** Supabase URL + anon key |
+| `shared/redpen-waitlist.js` | waitlist form → Supabase insert |
+| `assets/redpen/` | images |
+| `supabase/` | waitlist DB schema + setup notes |
 
-2. **Edit the design(s).** Each candidate is one folder:
+## Workflow
 
-   | Folder | Nickname     | File to edit      |
-   | ------ | ------------ | ----------------- |
-   | `v1/`  | Marked Paper | `v1/index.html`   |
-   | `v2/`  | Cinematic    | `v2/index.html`   |
-   | `v3/`  | Tres Mares   | `v3/index.html`   |
-   | `v4/`  | Kontrolltöö  | `v4/index.html`   |
-   | `v5/`  | Codex        | `v5/index.html`   |
-
-   Shared styles and scripts live in `shared/` and images in `assets/` — changing
-   those affects **every** design, so prefer editing inside a single `vN/` folder
-   unless you mean to change all of them.
-
-3. **Preview your change locally.** These are plain static files. From the repo
-   root, start any static server and open the page:
-
-   ```bash
-   npx -y http-server -p 4173 -c-1 .
-   # then open http://localhost:4173/v1/ (or v2, v3, …) in your browser
-   ```
-
-   (You can also just double-click a `vN/index.html` to open it directly; fonts
-   and Tailwind load from a CDN, so you need an internet connection.)
-
-4. **Commit and push your branch:**
-
-   ```bash
-   git add -A
-   git commit -m "v1: experiment with larger hero headline"
-   git push -u origin experiment/<your-name>-<short-idea>
-   ```
-
-5. **Open a pull request** on GitHub. Describe what you changed and why. Once we
-   have hosted previews wired up (see below), the PR will get its own live URL so
-   everyone can click through your version before it's merged.
-
-## Merging
-
-When a PR looks good, merge it into `main`. The public site at
-<https://punanepastakas.github.io/landing-designs/> updates automatically within a
-minute or two. Delete your branch after merging to keep things tidy.
+```bash
+git checkout main && git pull
+git checkout -b <your-name>-<short-idea>
+# edit, then:
+python3 -m http.server 4173      # preview at http://localhost:4173/
+git add -A && git commit -m "describe the change"
+git push -u origin <your-name>-<short-idea>
+# open a PR
+```
 
 ## Notes
 
-- **These pages are frontend-only.** The "Liitu ootenimekirjaga" (join waitlist)
-  forms don't submit anywhere yet — that's intentional for the review phase.
-- **Don't commit secrets** (API keys, tokens). There's nothing sensitive here and
-  it should stay that way.
+- **The waitlist form is live** — it writes to Supabase. See
+  [`supabase/README.md`](supabase/README.md) for how it works and how to read
+  signups.
+- **Don't commit secrets.** The Supabase *anon* key in `redpen-config.js` is
+  public by design and is fine to commit. The **service_role** key, the database
+  password, and any personal access token are secret — they must never appear in
+  this repo or in the browser.
