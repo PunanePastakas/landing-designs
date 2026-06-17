@@ -22,7 +22,6 @@
     sending:   { et: 'Saadan…',                                            en: 'Sending…' },
     success:   { et: 'Aitäh! Lisasime su ootenimekirja.',                  en: "Thanks! You're on the waitlist." },
     duplicate: { et: 'Oled juba nimekirjas — aitäh!',                      en: "You're already on the list — thanks!" },
-    consent:   { et: 'Palun märgi nõusolek, et saaksime sind lisada.',     en: 'Please tick the consent box so we can add you.' },
     error:     { et: 'Midagi läks valesti. Proovi hetke pärast uuesti.',   en: 'Something went wrong. Please try again shortly.' },
     offline:   { et: 'Vorm pole veel ühendatud. Proovi varsti uuesti.',    en: "The form isn't connected yet. Please try again soon." },
   };
@@ -48,7 +47,6 @@
     var statusEl = document.getElementById('waitlist-status');
     var submitBtn = document.getElementById('waitlist-submit');
     var emailEl = document.getElementById('email');
-    var consentEl = document.getElementById('waitlist-consent');
     var honeypotEl = document.getElementById('company');
 
     function setStatus(msg, kind) {
@@ -80,13 +78,6 @@
         return;
       }
 
-      // Native validation handles required/email shape; double-check consent.
-      if (consentEl && !consentEl.checked) {
-        setStatus(t('consent'), 'error');
-        consentEl.focus();
-        return;
-      }
-
       var email = (emailEl && emailEl.value || '').trim();
       if (!email) { setStatus(t('error'), 'error'); return; }
 
@@ -103,7 +94,7 @@
         email: email,
         source: 'landing-root',
         locale: document.documentElement.lang === 'en' ? 'en' : 'et',
-        consent: consentEl ? consentEl.checked : false,
+        consent: true, // implied: submitted after seeing the visible privacy notice
       }).then(function (res) {
         if (submitBtn) submitBtn.disabled = false;
         if (res && res.error) {
