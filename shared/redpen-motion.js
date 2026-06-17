@@ -260,7 +260,9 @@
   var lastY = -1;
 
   /* ── ET / EN toggle ────────────────────────────────────────────────── */
-  var LANG_KEY = 'pp-lang';
+  /* Estonian is always the default on load. Clicking EN switches the current
+     view only — there is no persistence, so a fresh load is always Estonian
+     and English appears only after an explicit click. */
   function applyLang(lang) {
     $$('[data-en]').forEach(function (el) {
       if (!el.hasAttribute('data-et')) el.setAttribute('data-et', el.innerHTML);
@@ -274,14 +276,10 @@
       b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang));
     });
     doc.documentElement.lang = lang;
-    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
   }
   $$('.lang-toggle button').forEach(function (b) {
     b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang')); });
   });
-  var saved = null;
-  try { saved = localStorage.getItem(LANG_KEY); } catch (e) {}
-  if (saved === 'en') applyLang('en');
 
   /* ── variant switcher ──────────────────────────────────────────────── */
   var VARIANTS = [
