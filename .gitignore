@@ -3,3 +3,8 @@
 
 # Internal brand briefs and source material — not for the public repo
 uploads/
+
+# Design-tool export (proprietary support.js runtime) — source for the new
+# design, already incorporated into index.html. Not needed in the repo.
+new/
+new-website.zip
